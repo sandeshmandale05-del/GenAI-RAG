@@ -25,7 +25,7 @@ try:
     
     # flatten it to plain text
     transcript=" ".join(chunk.text for chunk in transcript_list)
-    # print(transcript)
+    print(transcript)
     
 except TranscriptsDisabled:
     print("No caption available for this video")
@@ -58,7 +58,7 @@ vector_store=Chroma.from_documents(
 
 retriver=vector_store.as_retriever(search_type="similarity" , search_kwargs={"k":4})
 
-# print(retriver.invoke("why do rich people think diffrent"))
+print(retriver.invoke("why do rich people think diffrent"))
 
 model=ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
@@ -80,20 +80,20 @@ prompt=PromptTemplate(
 
 question="""what is the topic of "thinking" discussed in this video ? if yes then what was discussed"""
 result=retriver_docs=retriver.invoke(question)
-# print(result)
+print(result)
 
 context_text = "\n\n".join(doc.page_content for doc in result)
-# print(context_text)
+print(context_text)
 
 final_prompt = prompt.invoke({"context": context_text, "question": question})
-# print("this is final prompt    : ---   -",final_prompt)
+print("this is final prompt    : ---   -",final_prompt)
 
 
 # Generation
 
 try:
     answer=model.invoke(final_prompt)
-    # print("\n this is the ans     :  --------------------------" ,answer.content)
+    print("\n this is the ans     :  --------------------------" ,answer.content)
 except Exception as e:
     print(e)
     
