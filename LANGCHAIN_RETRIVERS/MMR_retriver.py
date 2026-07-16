@@ -10,8 +10,7 @@ key = os.getenv("GOOGLE_API_KEY")
 
 model=GoogleGenerativeAIEmbeddings(
     model="models/gemini-embedding-001",
-    google_api_key=key,
-    temperature=0.7
+    google_api_key=key
 )
 
 docs = [
